@@ -1,7 +1,13 @@
+import { Route, Routes } from "react-router-dom";
+
 function App() {
   return (
     <>
-      <div></div>
+      <div>
+        <Routes>
+          <Route path="/" />
+        </Routes>
+      </div>
     </>
   );
 }
