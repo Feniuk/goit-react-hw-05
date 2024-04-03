@@ -1,0 +1,24 @@
+.notContainer {
+  text-align: center;
+}
+
+.notTitle {
+  font-size: 35px;
+  color: #f90c0c;
+}
+
+.notText {
+  margin-top: 20px;
+  color: #f11111;
+}
+
+.notLink {
+  display: inline-block;
+  margin-top: 20px;
+  color: rgb(255, 255, 255);
+  background-color: #2e3c5efd;
+  text-decoration: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
