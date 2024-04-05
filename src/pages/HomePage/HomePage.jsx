@@ -23,13 +23,13 @@ const HomePage = () => {
     fetchMovieList();
   }, []);
   return (
-    <div className={styles.homePage}>
+    <div className={styles.pageContainer}>
       {error && <p className={styles.error}>Something went wrong...</p>}
-      <h1 className={styles.title}>Trending today:</h1>
+      <h1 className={styles.pageTitle}>Trending today:</h1>
       {isLoading ? (
         <div className={styles.loader}>LOADING...</div>
       ) : (
-        <MovieList movies={[movies]} />
+        <MovieList movies={movies} />
       )}
     </div>
   );
