@@ -28,7 +28,7 @@ export async function fetchMovieReviews(id) {
   return data.results;
 }
 
-export async function getMovieId(id) {
+export default async function getMovieId(id) {
   const { data } = await axios.get(`/movie/${id}`, options);
   return data;
 }
