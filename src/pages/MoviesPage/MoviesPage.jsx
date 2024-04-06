@@ -1,59 +1,65 @@
 import MovieList from "../../components/MovieList/MovieList";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Search from "../../components/Search/Search";
-import { useSearchParams } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import { useSearchParams, useLocation, Link } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import { moviesSearch } from "../../components/fetch-api";
+import styles from "./MoviesPage.module.css";
+import ErrorMassage from "../../components/ErrorMassage/ErrorMassage";
 
-const MoviesPage = () => {
+export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
-  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchQuery = searchParams.get("query") ?? "";
+  const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [params] = useSearchParams();
+  const location = useLocation();
+  const back = useRef(location.state ?? "/movies?query=${searchQuery}");
 
   useEffect(() => {
-    const pageApi = async () => {
-      if (searchQuery && searchQuery.trim().length > 0) {
-        try {
-          setIsLoading(true);
-          const trendingMovies = await moviesSearch(searchQuery);
-          setMovies(trendingMovies.results);
-        } catch (error) {
-          setError(error);
-        } finally {
-          setIsLoading(false);
-        }
-      } else {
-        setMovies([]);
+    async function fetchMovie() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await moviesSearch(searchQuery);
+        setMovies(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
       }
-    };
-    pageApi();
+    }
+
+    fetchMovie();
   }, [searchQuery]);
 
-  const formInput = (searchItem) => {
-    if (!searchItem.trim()) {
-      toast.error("Enter movie name");
-      return;
-    }
-    setSearchParams({ query: searchItem });
+  const handleSubmit = async (query) => {
+    setSearchQuery(query);
+    params.set("query", query);
   };
 
-  const handleSubmit = async (query) => {
-    searchParams.set("query", query);
+  const handleGoBack = () => {
+    setSearchQuery("");
   };
 
   return (
     <div>
-      <Search searchQuery={searchQuery} onSetSearchQuery={formInput} />
-      {isLoading && <Loader />}
-      <ul>
-        <MovieList movies={movies}></MovieList>
-      </ul>
-      <Toaster />
+      <Link
+        to={back.current}
+        className={styles.backLink}
+        onClick={handleGoBack}
+      >
+        ⬅️Go back
+      </Link>
+      <Search onSubmit={handleSubmit} value={searchQuery} />
+      <div>
+        {isLoading && <Loader />}
+        {error && <ErrorMassage />}
+        {movies.length === 0 && !isLoading && !error && searchQuery && (
+          <p>Search for the valid movie 😊 </p>
+        )}
+      </div>
+      <MovieList movies={movies} />
     </div>
   );
-};
-
-export default MoviesPage;
+}

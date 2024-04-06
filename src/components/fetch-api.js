@@ -17,3 +17,23 @@ export async function moviesSearch(search) {
   const { data } = await axios.get(`/search/movie?query=${search}`, options);
   return data.results;
 }
+
+export async function getMovieCast(id) {
+  const { data } = await axios.get(`/movie/${id}/credits`, options);
+  return data.cast;
+}
+
+export async function fetchMovieReviews(id) {
+  const { data } = await axios.get(`/movie/${id}/reviews`, options);
+  return data.results;
+}
+
+export async function getMovieId(id) {
+  const { data } = await axios.get(`/movie/${id}`, options);
+  return data;
+}
+
+export async function getMoviesTitle(search) {
+  const { data } = await axios.get(`/search/movie?query=${search}`, options);
+  return data.results;
+}

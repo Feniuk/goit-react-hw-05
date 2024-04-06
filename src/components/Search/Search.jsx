@@ -1,19 +1,43 @@
-import { Field, Form, Formik } from "formik";
+import { useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import styles from "./Search.module.css";
 
-const Search = ({ onSetSearchQuery, searchQuery }) => {
+export default function Search({ onSubmit }) {
+  const [params, setParams] = useSearchParams();
+
+  const onInputChange = (query) => {
+    const newParams = new URLSearchParams(params);
+    newParams.set("query", query);
+    setParams(newParams);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const queryValue = e.target.query.value.trim();
+    if (!queryValue) {
+      toast.error("Enter a movie name");
+      return;
+    }
+
+    onInputChange(queryValue);
+
+    onSubmit(queryValue);
+  };
+
   return (
-    <Formik
-      initialValues={{ query: searchQuery ?? "" }}
-      onSubmit={(values) => {
-        onSetSearchQuery(values.query);
-      }}
-    >
-      <Form>
-        <Field placeholder="Name films" type="text" name="query" />
-        <button type="submit">Search</button>
-      </Form>
-    </Formik>
+    <>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="query"
+          className={styles.input}
+          placeholder="Search movies"
+          required
+        />
+        <button type="submit" className={styles.searchButton}>
+          Search
+        </button>
+      </form>
+    </>
   );
-};
-
-export default Search;
+}
