@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Loader from "../Loader/Loader";
 import ErrorMassage from "../ErrorMassage/ErrorMassage";
 import styles from "./MovieReview.module.css";
-import useParams from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function MovieReview() {
   const { movieId } = useParams();
@@ -27,7 +27,7 @@ export default function MovieReview() {
     fetchDataReviews();
   }, [movieId]);
 
-  if (loading)
+  if (setLoading === true)
     return (
       <div>
         <Loader />
@@ -38,7 +38,7 @@ export default function MovieReview() {
   return (
     <div className={styles.reviewsContainer}>
       <h3>Movie Reviews</h3>
-      {setLoading && <Loader />}
+      {loading && <Loader />}
       {error && <ErrorMassage />}
       {reviews.length > 0 && (
         <ul className={styles.reviewsList}>

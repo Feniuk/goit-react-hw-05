@@ -18,6 +18,11 @@ export async function moviesSearch(search) {
   return data.results;
 }
 
+export default async function getMovieId(id) {
+  const { data } = await axios.get(`/movie/${id}`, options);
+  return data;
+}
+
 export async function getMovieCast(id) {
   const { data } = await axios.get(`/movie/${id}/credits`, options);
   return data.cast;
@@ -26,11 +31,6 @@ export async function getMovieCast(id) {
 export async function fetchMovieReviews(id) {
   const { data } = await axios.get(`/movie/${id}/reviews`, options);
   return data.results;
-}
-
-export default async function getMovieId(id) {
-  const { data } = await axios.get(`/movie/${id}`, options);
-  return data;
 }
 
 export async function getMoviesTitle(search) {

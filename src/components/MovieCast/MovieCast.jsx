@@ -9,13 +9,13 @@ export default function MovieCast() {
   const [actor, setActor] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { moviesId } = useParams();
+  const { movieId } = useParams();
 
   useEffect(() => {
     async function fetchData() {
       try {
         setIsLoading(true);
-        const data = await getMovieCast(moviesId);
+        const data = await getMovieCast(movieId);
         setActor(data);
       } catch (error) {
         setError(true);
@@ -24,7 +24,7 @@ export default function MovieCast() {
       }
     }
     fetchData();
-  }, [moviesId]);
+  }, [movieId]);
 
   return (
     <div className={styles.actorsContainer}>
