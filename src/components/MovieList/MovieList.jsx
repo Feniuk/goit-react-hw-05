@@ -9,7 +9,7 @@ export default function MovieList({ movies }) {
         <li key={movie.id} className={styles.listMovie}>
           <Link
             to={{
-              ...location,
+              location,
               pathname: `/movies/${movie.id}`,
               state: location.state,
             }}
