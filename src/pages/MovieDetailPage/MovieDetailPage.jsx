@@ -15,7 +15,6 @@ export default function MovieDetailPage() {
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
   const backLinkRef = useRef(location.state ?? "/");
