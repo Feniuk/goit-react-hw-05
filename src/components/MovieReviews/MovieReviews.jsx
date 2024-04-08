@@ -2,7 +2,7 @@ import { fetchMovieReviews } from "../fetch-api";
 import { useState, useEffect } from "react";
 import Loader from "../Loader/Loader";
 import ErrorMassage from "../ErrorMassage/ErrorMassage";
-import styles from "./MovieReview.module.css";
+import styles from "./MovieReviews.module.css";
 import { useParams } from "react-router-dom";
 
 export default function MovieReview() {
